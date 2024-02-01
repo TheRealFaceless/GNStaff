@@ -1,0 +1,9 @@
+name: GNStaff
+version: 1.0
+main: dev.faceless.gnstaff.GNStaff
+api-version: 1.20
+description: "Moderation Plugin for GlitchedNetwork"
+commands:
+  gnstaff:
+    description: Plugin Main Command
+    usage: /gnstaff <subcommand>
