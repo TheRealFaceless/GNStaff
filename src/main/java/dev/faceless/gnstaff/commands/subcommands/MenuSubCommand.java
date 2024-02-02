@@ -1,6 +1,7 @@
-package dev.faceless.gnstaff.commands;
+package dev.faceless.gnstaff.commands.subcommands;
 
 import dev.faceless.gnstaff.GNStaff;
+import dev.faceless.gnstaff.commands.SubCommand;
 import dev.faceless.gnstaff.menus.MainMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,6 +12,10 @@ import java.util.List;
 public class MenuSubCommand extends SubCommand {
     public MenuSubCommand(JavaPlugin plugin) {
         super(plugin);
+        setName("menu");
+        setDescription("Opens the main menu for managing players on the server");
+        setSyntax("/gnstaff menu");
+        setAliases(List.of("m"));
     }
 
     @Override
@@ -27,30 +32,4 @@ public class MenuSubCommand extends SubCommand {
         return completions;
     }
 
-    @Override
-    public String getName() {
-        return "menu";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Opens the main menu for managing players on the server";
-    }
-
-    @Override
-    public String getSyntax() {
-        return "/gnstaff menu";
-    }
-
-    @Override
-    public String getPermission() {
-        return "op";
-    }
-
-    @Override
-    public List<String> getAliases() {
-        List<String> aliases = new ArrayList<>();
-        aliases.add("m");
-        return aliases;
-    }
 }

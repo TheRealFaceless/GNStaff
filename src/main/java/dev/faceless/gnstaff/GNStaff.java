@@ -25,6 +25,11 @@ public class GNStaff extends JavaPlugin {
         registerListeners();
     }
 
+    @Override
+    public void onDisable() {
+
+    }
+
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new PaginatedMenuListener(), this);
@@ -35,13 +40,6 @@ public class GNStaff extends JavaPlugin {
     }
 
     public static PlayerMenuUtility getPlayerMenuUtility(Player p) {
-        PlayerMenuUtility playerMenuUtility;
-        if (!(playerMenuUtilities.containsKey(p))) {
-            playerMenuUtility = new PlayerMenuUtility(p);
-            playerMenuUtilities.put(p, playerMenuUtility);
-            return playerMenuUtility;
-        } else {
-            return playerMenuUtilities.get(p);
-        }
+        return playerMenuUtilities.computeIfAbsent(p, PlayerMenuUtility::new);
     }
 }

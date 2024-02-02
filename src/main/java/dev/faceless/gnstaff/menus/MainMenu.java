@@ -1,13 +1,13 @@
 package dev.faceless.gnstaff.menus;
 
-import dev.faceless.gnstaff.GNStaff;
 import dev.faceless.gnstaff.utilities.ChatUtils;
+import dev.faceless.gnstaff.utilities.Keys;
 import dev.faceless.gnstaff.utilities.menu.PaginatedMenu;
 import dev.faceless.gnstaff.utilities.menu.PlayerMenuUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -47,7 +48,7 @@ public class MainMenu extends PaginatedMenu {
                     ItemStack playerHead = getHead(p);
                     ItemMeta playerHeadMeta = playerHead.getItemMeta();
                     playerHeadMeta.setDisplayName(ChatUtils.formatLegacy("&d&l" + p.getDisplayName()));
-                    playerHeadMeta.getPersistentDataContainer().set(new NamespacedKey(GNStaff.getPlugin(), "uuid"), PersistentDataType.STRING, p.getUniqueId().toString());
+                    playerHeadMeta.getPersistentDataContainer().set(Keys.UUID, PersistentDataType.STRING, p.getUniqueId().toString());
                     playerHead.setItemMeta(playerHeadMeta);
                     inventory.addItem(playerHead);
                 }
@@ -65,30 +66,47 @@ public class MainMenu extends PaginatedMenu {
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
-        Player p = (Player) e.getWhoClicked();
+        Player staff = (Player) e.getWhoClicked();
         ArrayList<Player> onlinePlayers = new ArrayList<>(getServer().getOnlinePlayers());
-        if (e.getCurrentItem().getType() == Material.PLAYER_HEAD) {
+        switch (e.getCurrentItem().getType()) {
+            case PLAYER_HEAD -> {
+                ItemStack playerHead = e.getCurrentItem();
+                ItemMeta playerHeadMeta = playerHead.getItemMeta();
 
-            // Open player manage menu
-
-        } else if (e.getCurrentItem().getType() == Material.BARRIER) {
-            p.closeInventory();
-        } else if (e.getCurrentItem().getType() == Material.RED_STAINED_GLASS_PANE || e.getCurrentItem().getType() == Material.GREEN_STAINED_GLASS_PANE) {
-            if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatUtils.formatLegacy("&c&lLeft"))) {
-                if (page == 0) {
-                    p.sendMessage(Component.text("[GN Staff] You are already on the first page!", NamedTextColor.RED));
-                } else {
-                    page--;
-                    super.open();
+                if (!playerHeadMeta.getPersistentDataContainer().has(Keys.UUID, PersistentDataType.STRING)) {
+                    return;
                 }
-            } else if (e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatUtils.formatLegacy("&a&lRight"))) {
-                if (!((index + 1) >= onlinePlayers.size())) {
-                    page++;
-                    super.open();
-                } else {
-                    p.sendMessage(Component.text("[GN Staff] You are already on the last page!", NamedTextColor.RED));
+
+                String targetUUID = playerHeadMeta.getPersistentDataContainer().get(Keys.UUID, PersistentDataType.STRING);
+                Player player = Bukkit.getPlayer(UUID.fromString(targetUUID));
+                if (player == null) return;
+
+                PlayerMenu playerMenu = new PlayerMenu(player);
+                playerMenu.open(staff);
+            }
+
+            case BARRIER -> staff.closeInventory();
+
+            case RED_STAINED_GLASS_PANE, GREEN_STAINED_GLASS_PANE -> {
+                ItemMeta itemMeta = e.getCurrentItem().getItemMeta();
+
+                if (itemMeta.getPersistentDataContainer().has(Keys.PREVIOUS_PAGE)) {
+                    if (page == 0) {
+                        staff.sendMessage(Component.text("[GN Staff] You are already on the first page!", NamedTextColor.RED));
+                    } else {
+                        page--;
+                        super.open();
+                    }
+                } else if (itemMeta.getPersistentDataContainer().has(Keys.NEXT_PAGE)) {
+                    if (!((index + 1) >= onlinePlayers.size())) {
+                        page++;
+                        super.open();
+                    } else {
+                        staff.sendMessage(Component.text("[GN Staff] You are already on the last page!", NamedTextColor.RED));
+                    }
                 }
             }
         }
+
     }
 }

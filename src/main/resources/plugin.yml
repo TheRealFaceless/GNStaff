@@ -7,3 +7,4 @@ commands:
   gnstaff:
     description: Plugin Main Command
     usage: /gnstaff <subcommand>
+    permission: permission.gnstaff.command

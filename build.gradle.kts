@@ -27,6 +27,8 @@ tasks.withType(JavaCompile::class.java) {
     options.encoding = "UTF-8"
 }
 
-//tasks.jar{
-//    destinationDirectory.set(file(""))
-//}
+/*
+tasks.jar{
+    destinationDirectory.set(file(""))
+}
+*/
