@@ -1,6 +1,6 @@
 package dev.faceless.gnstaff.commands;
 
-import dev.faceless.gnstaff.utils.ChatUtils;
+import dev.faceless.gnstaff.utilities.ChatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -15,12 +15,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BaseCommand implements TabExecutor {
-
     private final Map<String, SubCommand> commands;
 
     public BaseCommand(JavaPlugin plugin) {
         this.commands = new HashMap<>();
-
+        register(new MenuSubCommand(plugin));
     }
 
     @Override
@@ -98,5 +97,4 @@ public class BaseCommand implements TabExecutor {
 
         return command.onTabComplete(player, args);
     }
-
 }

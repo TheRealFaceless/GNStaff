@@ -1,4 +1,4 @@
-package dev.faceless.gnstaff.utils;
+package dev.faceless.gnstaff.utilities;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;

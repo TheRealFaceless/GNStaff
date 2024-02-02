@@ -27,6 +27,6 @@ tasks.withType(JavaCompile::class.java) {
     options.encoding = "UTF-8"
 }
 
-tasks.jar{
-    destinationDirectory.set(file("C:\\Users\\Faceless\\Desktop\\Servers\\Paper 1.20.4\\plugins"))
-}
+//tasks.jar{
+//    destinationDirectory.set(file(""))
+//}

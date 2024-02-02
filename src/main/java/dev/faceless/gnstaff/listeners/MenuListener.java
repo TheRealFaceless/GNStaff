@@ -1,6 +1,6 @@
 package dev.faceless.gnstaff.listeners;
 
-import dev.faceless.gnstaff.menu.Menu;
+import dev.faceless.gnstaff.utilities.menu.Menu;
 import org.bukkit.event.Listener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -1,4 +1,4 @@
-package dev.faceless.gnstaff.menu;
+package dev.faceless.gnstaff.utilities.menu;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -13,7 +13,6 @@ import java.util.*;
 public class Menu {
     private static final Map<UUID, Menu> openMenus = new HashMap<>();
     private static final Map<String, Set<UUID>> viewers = new HashMap<>();
-
     private final Map<Integer, MenuClick> menuClickActions = new HashMap<>();
 
     private MenuClick generalClickAction;
@@ -129,5 +128,4 @@ public class Menu {
     }
 
     public Inventory getInventory(){ return inventory; }
-
 }
