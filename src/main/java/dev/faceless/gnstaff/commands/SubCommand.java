@@ -13,11 +13,11 @@ public abstract class SubCommand {
         this.plugin = plugin;
     }
 
-    String name;
-    String description;
-    String syntax;
-    String permission;
-    List<String> aliases;
+    private String name;
+    private String description;
+    private String syntax;
+    private String permission;
+    private List<String> aliases;
 
     public abstract void onCommand(Player player, String[] args);
 

@@ -1,5 +1,6 @@
 package dev.faceless.gnstaff.commands;
 
+import dev.faceless.gnstaff.utils.ChatUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -28,8 +29,18 @@ public class BaseCommand implements TabExecutor {
             return true;
         }
 
+        //Ugly code ahead
         if (args.length == 0) {
-            player.sendMessage("<red>/Ctf help");
+            ChatUtils.sendMessage(player, "<dark_gray>===============================================");
+            for (String command : commands.keySet()) {
+                SubCommand subCommand = commands.get(command);
+                ChatUtils.sendMessage(player,
+                        "<gray><b>Name:</b></gray> "
+                        + (subCommand.getName() != null ? subCommand.getName() : "NotSet") +
+                                "<gray><b> || </b></gray>"+ "<gray><b>Syntax:</b></gray> "
+                        + (subCommand.getSyntax() != null ? subCommand.getSyntax() : "NotSet"));
+            }
+            ChatUtils.sendMessage(player, "<dark_gray>===============================================");
             return true;
         }
 
