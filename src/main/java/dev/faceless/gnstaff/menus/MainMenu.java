@@ -21,8 +21,12 @@ import java.util.UUID;
 import static org.bukkit.Bukkit.getServer;
 
 public class MainMenu extends PaginatedMenu {
-    public MainMenu(Player player) {
+
+    public ArrayList<Player> onlinePlayers;
+
+    public MainMenu(Player player, ArrayList<Player> onlinePlayers) {
         super(player);
+        this.onlinePlayers = onlinePlayers;
     }
 
     @Override
@@ -38,7 +42,6 @@ public class MainMenu extends PaginatedMenu {
     @Override
     public void setMenuItems() {
         addMenuBorder();
-        ArrayList<Player> onlinePlayers = new ArrayList<>(getServer().getOnlinePlayers());
         if (!onlinePlayers.isEmpty()) {
             for (int i = 0; i < getMaxItemsPerPage(); i++) {
                 index = getMaxItemsPerPage() * page + i;
@@ -111,6 +114,11 @@ public class MainMenu extends PaginatedMenu {
                     }
                     SoundUtil.UI_CLICK(staff);
                 }
+            }
+            case OAK_SIGN -> {
+                staff.closeInventory();
+                staff.getPersistentDataContainer().set(Keys.SEARCHING, PersistentDataType.STRING, "");
+                staff.sendMessage(ChatUtils.format("<red>Type player name in chat."));
             }
         }
 

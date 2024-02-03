@@ -15,4 +15,6 @@ public class Keys {
     public static final NamespacedKey NEXT_PAGE = new NamespacedKey(plugin, "next_page");
     public static final NamespacedKey PREVIOUS_PAGE = new NamespacedKey(plugin, "previous_page");
     public static final NamespacedKey CLOSE = new NamespacedKey(plugin, "close");
+
+    public static final NamespacedKey SEARCHING = new NamespacedKey(plugin, "searching_for_player");
 }

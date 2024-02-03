@@ -1,8 +1,10 @@
 package dev.faceless.gnstaff.commands.subcommands;
 
-import dev.faceless.gnstaff.GNStaff;
 import dev.faceless.gnstaff.commands.SubCommand;
 import dev.faceless.gnstaff.menus.MainMenu;
+import dev.faceless.gnstaff.utilities.ChatUtils;
+import dev.faceless.gnstaff.utilities.Keys;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,7 +22,10 @@ public class MenuSubCommand extends SubCommand {
 
     @Override
     public void onCommand(Player player, String[] args) {
-        new MainMenu(player).open();
+        if(player.getPersistentDataContainer().has(Keys.SEARCHING)) {
+            player.sendMessage(ChatUtils.format("<red>Please provide a player name."));
+        }
+        new MainMenu(player, new ArrayList<>(Bukkit.getOnlinePlayers())).open();
     }
 
     @Override

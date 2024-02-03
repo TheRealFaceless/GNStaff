@@ -3,6 +3,7 @@ package dev.faceless.gnstaff;
 import dev.faceless.gnstaff.commands.BaseCommand;
 import dev.faceless.gnstaff.listeners.MenuListener;
 import dev.faceless.gnstaff.listeners.PaginatedMenuListener;
+import dev.faceless.gnstaff.listeners.StaffTypePlayerNameListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class GNStaff extends JavaPlugin {
@@ -23,6 +24,7 @@ public class GNStaff extends JavaPlugin {
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new PaginatedMenuListener(), this);
+        getServer().getPluginManager().registerEvents(new StaffTypePlayerNameListener(), this);
     }
 
     public void registerCommands() {

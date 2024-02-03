@@ -7,8 +7,11 @@ import dev.faceless.gnstaff.utilities.menu.Menu;
 import dev.faceless.gnstaff.utilities.menu.MenuUtils;
 import dev.faceless.gnstaff.utilities.moderation.ModerationAction;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 
 public class PlayerMenu extends Menu {
 
@@ -37,7 +40,7 @@ public class PlayerMenu extends Menu {
         }));
 
         setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")),
-                (staff, event)-> new MainMenu(player).open());
+                (staff, event)-> new MainMenu(player, new ArrayList<>(Bukkit.getOnlinePlayers())).open());
 
         MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
     }
