@@ -29,7 +29,7 @@ public class StaffTypePlayerNameListener implements Listener {
         ArrayList<Player> players = new ArrayList<>();
         Bukkit.getOnlinePlayers()
                 .stream()
-                .filter((p)-> player.getName().startsWith(name))
+                .filter((p)-> p.getName().startsWith(name))
                 .forEach(players::add);
 
         if(players.isEmpty()){

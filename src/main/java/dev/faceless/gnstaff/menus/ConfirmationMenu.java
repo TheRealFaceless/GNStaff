@@ -25,8 +25,14 @@ public class ConfirmationMenu extends Menu {
                 ((staff, event) -> lastMenu.open(staff)));
 
 
-        setItem(5, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&aConfirm")),
-                ((staff, event) -> ModerationManager.getManager().handle(staff, player, action, reason, duration)));
+        setItem(5, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&aConfirm")), ((staff, event) -> {
+            if (action == null) {
+                staff.performCommand("vanish");
+                staff.teleport(player.getLocation());
+            } else {
+                ModerationManager.getManager().handle(staff, player, action, reason, duration);
+            }
+        }));
 
         MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
 

@@ -31,8 +31,8 @@ public class PlayerMenu extends Menu {
         }));
 
         setItem(13, ItemCreator.create(Material.PURPLE_CONCRETE, ChatUtils.formatLegacy("&cTp")), ((staff, event) -> {
-            staff.performCommand("/vanish");
-            staff.teleport(player.getLocation());
+            ConfirmationMenu confirmationMenu = new ConfirmationMenu(player, null, null, null, this);
+            confirmationMenu.open(staff);
         }));
 
         setItem(14, ItemCreator.create(Material.RED_CONCRETE, ChatUtils.formatLegacy("&cIp Ban")), ((staff, event) -> {
@@ -45,8 +45,9 @@ public class PlayerMenu extends Menu {
             reasonMenu.open(staff);
         }));
 
-        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")),
-                (staff, event)-> new MainMenu(player, new ArrayList<>(Bukkit.getOnlinePlayers())).open());
+        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")), ((staff, event) -> {
+            new MainMenu(staff, new ArrayList<>(Bukkit.getOnlinePlayers())).open();
+        }));
 
         MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
     }
