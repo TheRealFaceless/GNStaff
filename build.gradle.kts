@@ -26,12 +26,16 @@ dependencies {
 tasks.withType(JavaCompile::class.java) {
     options.encoding = "UTF-8"
 }
-/*
-tasks.jar{
-    destinationDirectory.set(file("C:\\Users\\kaden\\OneDrive\\Documents\\[1] My Files\\Development\\Test Server (Paper)\\plugins"))
-}
- */
-//
-tasks.jar{
-    destinationDirectory.set(file("C:\\Users\\Faceless\\Desktop\\Servers\\Paper 1.20.4\\plugins"))
+
+
+val path = "C:\\Users\\Faceless\\Desktop\\Servers\\Paper 1.20.4\\plugins"
+
+if (file(path).exists()) {
+    tasks.jar {
+        destinationDirectory.set(file(path))
+    }
+} else {
+    tasks.jar {
+        destinationDirectory.set(file("C:\\Users\\kaden\\OneDrive\\Documents\\[1] My Files\\Development\\Test Server (Paper)\\plugins"))
+    }
 }
