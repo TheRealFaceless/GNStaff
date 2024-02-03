@@ -2,6 +2,7 @@ package dev.faceless.gnstaff.menus;
 
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.Keys;
+import dev.faceless.gnstaff.utilities.SoundUtil;
 import dev.faceless.gnstaff.utilities.menu.PaginatedMenu;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -81,10 +82,14 @@ public class MainMenu extends PaginatedMenu {
                 if (player == null) return;
 
                 PlayerMenu playerMenu = new PlayerMenu(player);
+                SoundUtil.UI_CLICK(staff);
                 playerMenu.open(staff);
             }
 
-            case BARRIER -> staff.closeInventory();
+            case BARRIER -> {
+                SoundUtil.UI_BACK(staff);
+                staff.closeInventory();
+            }
 
             case RED_STAINED_GLASS_PANE, GREEN_STAINED_GLASS_PANE -> {
                 ItemMeta itemMeta = e.getCurrentItem().getItemMeta();
@@ -96,6 +101,7 @@ public class MainMenu extends PaginatedMenu {
                         page--;
                         super.open();
                     }
+                    SoundUtil.UI_CLICK(staff);
                 } else if (itemMeta.getPersistentDataContainer().has(Keys.NEXT_PAGE)) {
                     if (!((index + 1) >= onlinePlayers.size())) {
                         page++;
@@ -103,6 +109,7 @@ public class MainMenu extends PaginatedMenu {
                     } else {
                         staff.sendMessage(Component.text("[GN Staff] You are already on the last page!", NamedTextColor.RED));
                     }
+                    SoundUtil.UI_CLICK(staff);
                 }
             }
         }

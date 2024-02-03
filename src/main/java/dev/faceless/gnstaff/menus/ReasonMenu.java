@@ -2,7 +2,9 @@ package dev.faceless.gnstaff.menus;
 
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.ItemCreator;
+import dev.faceless.gnstaff.utilities.SoundUtil;
 import dev.faceless.gnstaff.utilities.menu.Menu;
+import dev.faceless.gnstaff.utilities.menu.MenuUtils;
 import dev.faceless.gnstaff.utilities.moderation.ModerationAction;
 import dev.faceless.gnstaff.utilities.moderation.Reason;
 import net.kyori.adventure.text.Component;
@@ -13,6 +15,8 @@ public class ReasonMenu extends Menu {
 
     public ReasonMenu(ModerationAction action, Player player, Menu lastMenu) {
         super(27, Component.text("Reason"));
+        setOpenAction((SoundUtil::MENU_OPEN));
+        setCloseAction(SoundUtil::MENU_CLOSE);
 
         Reason[] reasons = Reason.values();
 
@@ -31,13 +35,9 @@ public class ReasonMenu extends Menu {
             });
         }
 
-        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")), (staff, event) ->
-                lastMenu.open(staff));
+        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")),
+                (staff, event) -> lastMenu.open(staff));
 
-        for (int i = 0; i < 27; i++) {
-            if (getInventory().getItem(i) == null) {
-                setItem(i, ItemCreator.create(Material.GRAY_STAINED_GLASS_PANE, " "));
-            }
-        }
+        MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
     }
 }

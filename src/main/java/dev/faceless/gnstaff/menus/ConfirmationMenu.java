@@ -2,7 +2,9 @@ package dev.faceless.gnstaff.menus;
 
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.ItemCreator;
+import dev.faceless.gnstaff.utilities.SoundUtil;
 import dev.faceless.gnstaff.utilities.menu.Menu;
+import dev.faceless.gnstaff.utilities.menu.MenuUtils;
 import dev.faceless.gnstaff.utilities.moderation.ModerationAction;
 import dev.faceless.gnstaff.utilities.moderation.ModerationManager;
 import dev.faceless.gnstaff.utilities.moderation.Reason;
@@ -16,17 +18,17 @@ public class ConfirmationMenu extends Menu {
 
     public ConfirmationMenu(Player player, ModerationAction action, Reason reason, Duration duration, Menu lastMenu) {
         super(9, Component.text("Confirmation Menu"));
+        setOpenAction((SoundUtil::MENU_OPEN));
+        setCloseAction(SoundUtil::MENU_CLOSE);
 
-        setItem(3, ItemCreator.create(Material.RED_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&cCancel")), ((staff, event) -> lastMenu.open(staff)));
+        setItem(3, ItemCreator.create(Material.RED_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&cCancel")),
+                ((staff, event) -> lastMenu.open(staff)));
 
-        setItem(5, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&aConfirm")), ((staff, event) ->
-                ModerationManager.getManager().handle(staff, player, action, reason, duration)));
 
-        for (int i = 0; i < 9; i++) {
-            if (getInventory().getItem(i) == null) {
-                setItem(i, ItemCreator.create(Material.GRAY_STAINED_GLASS_PANE, " "));
-            }
-        }
+        setItem(5, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&aConfirm")),
+                ((staff, event) -> ModerationManager.getManager().handle(staff, player, action, reason, duration)));
+
+        MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
 
     }
 

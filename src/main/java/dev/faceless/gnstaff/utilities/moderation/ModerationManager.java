@@ -1,7 +1,7 @@
 package dev.faceless.gnstaff.utilities.moderation;
 
 import dev.faceless.gnstaff.utilities.ChatUtils;
-import org.bukkit.Sound;
+import dev.faceless.gnstaff.utilities.SoundUtil;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;
@@ -44,7 +44,7 @@ public class ModerationManager{
 
     private void warnPlayer(Player staff, Player player, ModerationAction action, Reason reason) {
         ChatUtils.sendLegacyMessage(player, "&4You have been warned by " +staff.getName()+ " for " +"&8&l["+ reason.getName()+"]");
-        player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_PLACE, 1,1);
+        SoundUtil.BAN_HAMMER(player);
     }
 
     private void ban(Player staff, Player player, ModerationAction action, Reason reason, Duration duration) {

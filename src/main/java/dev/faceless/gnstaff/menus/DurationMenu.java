@@ -2,7 +2,9 @@ package dev.faceless.gnstaff.menus;
 
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.ItemCreator;
+import dev.faceless.gnstaff.utilities.SoundUtil;
 import dev.faceless.gnstaff.utilities.menu.Menu;
+import dev.faceless.gnstaff.utilities.menu.MenuUtils;
 import dev.faceless.gnstaff.utilities.moderation.ModerationAction;
 import dev.faceless.gnstaff.utilities.moderation.Reason;
 import net.kyori.adventure.text.Component;
@@ -14,6 +16,8 @@ import java.time.Duration;
 public class DurationMenu extends Menu {
     public DurationMenu(Player player, ModerationAction action, Reason reason, Menu lastMenu) {
         super(27, Component.text("Duration"));
+        setOpenAction((SoundUtil::MENU_OPEN));
+        setCloseAction(SoundUtil::MENU_CLOSE);
 
         setItem(9, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f30 MINUTES")), (staff, event)-> {
             Duration duration = Duration.ofMinutes(30);
@@ -72,13 +76,9 @@ public class DurationMenu extends Menu {
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, null, this);
             menu.open(staff);
         });
-        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")), (staff, event)->
-                lastMenu.open(staff));
+        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")),
+                (staff, event)-> lastMenu.open(staff));
 
-        for (int i = 0; i < 27; i++) {
-            if (getInventory().getItem(i) == null) {
-                setItem(i, ItemCreator.create(Material.GRAY_STAINED_GLASS_PANE, " "));
-            }
-        }
+        MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
     }
 }
