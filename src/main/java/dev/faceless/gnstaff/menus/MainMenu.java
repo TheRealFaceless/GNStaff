@@ -1,5 +1,6 @@
 package dev.faceless.gnstaff.menus;
 
+import dev.faceless.gnstaff.GNStaff;
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.Keys;
 import dev.faceless.gnstaff.utilities.SoundUtil;
@@ -8,6 +9,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,8 +23,11 @@ import java.util.UUID;
 import static org.bukkit.Bukkit.getServer;
 
 public class MainMenu extends PaginatedMenu {
-    public MainMenu(Player player) {
+    private String search;
+
+    public MainMenu(Player player, String search) {
         super(player);
+        this.search = search;
     }
 
     @Override
@@ -38,19 +43,51 @@ public class MainMenu extends PaginatedMenu {
     @Override
     public void setMenuItems() {
         addMenuBorder();
+
+        if (!player.getPersistentDataContainer().has(new NamespacedKey(GNStaff.getPlugin(), "is-searching"), PersistentDataType.BOOLEAN))
+            return;
+
+        boolean isSearching = player.getPersistentDataContainer().get(new NamespacedKey(GNStaff.getPlugin(), "is-searching"), PersistentDataType.BOOLEAN);
+
         ArrayList<Player> onlinePlayers = new ArrayList<>(getServer().getOnlinePlayers());
-        if (!onlinePlayers.isEmpty()) {
-            for (int i = 0; i < getMaxItemsPerPage(); i++) {
-                index = getMaxItemsPerPage() * page + i;
-                if (index >= onlinePlayers.size()) break;
-                if (onlinePlayers.get(index) != null) {
-                    Player p = onlinePlayers.get(index);
-                    ItemStack playerHead = getHead(p);
-                    ItemMeta playerHeadMeta = playerHead.getItemMeta();
-                    playerHeadMeta.setDisplayName(ChatUtils.formatLegacy("&d&l" + p.getDisplayName()));
-                    playerHeadMeta.getPersistentDataContainer().set(Keys.UUID, PersistentDataType.STRING, p.getUniqueId().toString());
-                    playerHead.setItemMeta(playerHeadMeta);
-                    inventory.addItem(playerHead);
+        if (isSearching) {
+            ArrayList<Player> searchedPlayers = new ArrayList<>();
+            for (Player player : onlinePlayers) {
+                String playerName = player.getName();
+                String playerDisplayName = player.displayName().toString();
+                if (playerName.contains(search) || playerDisplayName.contains(search)) {
+                    searchedPlayers.add(player);
+                }
+            }
+            if (!searchedPlayers.isEmpty()) {
+                for (int i = 0; i < getMaxItemsPerPage(); i++) {
+                    index = getMaxItemsPerPage() * page + i;
+                    if (index >= searchedPlayers.size()) break;
+                    if (searchedPlayers.get(index) != null) {
+                        Player p = searchedPlayers.get(index);
+                        ItemStack playerHead = getHead(p);
+                        ItemMeta playerHeadMeta = playerHead.getItemMeta();
+                        playerHeadMeta.setDisplayName(ChatUtils.formatLegacy("&d&l" + p.getDisplayName()));
+                        playerHeadMeta.getPersistentDataContainer().set(Keys.UUID, PersistentDataType.STRING, p.getUniqueId().toString());
+                        playerHead.setItemMeta(playerHeadMeta);
+                        inventory.addItem(playerHead);
+                    }
+                }
+            }
+        } else {
+            if (!onlinePlayers.isEmpty()) {
+                for (int i = 0; i < getMaxItemsPerPage(); i++) {
+                    index = getMaxItemsPerPage() * page + i;
+                    if (index >= onlinePlayers.size()) break;
+                    if (onlinePlayers.get(index) != null) {
+                        Player p = onlinePlayers.get(index);
+                        ItemStack playerHead = getHead(p);
+                        ItemMeta playerHeadMeta = playerHead.getItemMeta();
+                        playerHeadMeta.setDisplayName(ChatUtils.formatLegacy("&d&l" + p.getDisplayName()));
+                        playerHeadMeta.getPersistentDataContainer().set(Keys.UUID, PersistentDataType.STRING, p.getUniqueId().toString());
+                        playerHead.setItemMeta(playerHeadMeta);
+                        inventory.addItem(playerHead);
+                    }
                 }
             }
         }
@@ -111,6 +148,11 @@ public class MainMenu extends PaginatedMenu {
                     }
                     SoundUtil.UI_CLICK(staff);
                 }
+            }
+
+            case OAK_SIGN -> {
+                player.closeInventory();
+                // PDC Logic
             }
         }
 

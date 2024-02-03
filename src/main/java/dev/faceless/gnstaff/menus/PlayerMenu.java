@@ -11,7 +11,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class PlayerMenu extends Menu {
-
     public PlayerMenu(Player player) {
         super(27, Component.text("Manage " + player.getName()));
         setOpenAction((SoundUtil::MENU_OPEN));
@@ -36,8 +35,9 @@ public class PlayerMenu extends Menu {
             reasonMenu.open(staff);
         }));
 
-        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")),
-                (staff, event)-> new MainMenu(player).open());
+        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")), ((staff, event) -> {
+            new MainMenu(staff, "").open();
+        }));
 
         MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
     }
