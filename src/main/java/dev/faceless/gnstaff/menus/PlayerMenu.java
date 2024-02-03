@@ -29,6 +29,12 @@ public class PlayerMenu extends Menu {
             ReasonMenu reasonMenu = new ReasonMenu(ModerationAction.BAN, player, this);
             reasonMenu.open(staff);
         }));
+
+        setItem(13, ItemCreator.create(Material.PURPLE_CONCRETE, ChatUtils.formatLegacy("&cTp")), ((staff, event) -> {
+            staff.performCommand("/vanish");
+            staff.teleport(player.getLocation());
+        }));
+
         setItem(14, ItemCreator.create(Material.RED_CONCRETE, ChatUtils.formatLegacy("&cIp Ban")), ((staff, event) -> {
             ReasonMenu reasonMenu = new ReasonMenu(ModerationAction.BAN_IP, player, this);
             reasonMenu.open(staff);

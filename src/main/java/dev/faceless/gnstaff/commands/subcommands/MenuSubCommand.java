@@ -24,6 +24,7 @@ public class MenuSubCommand extends SubCommand {
     public void onCommand(Player player, String[] args) {
         if(player.getPersistentDataContainer().has(Keys.SEARCHING)) {
             player.sendMessage(ChatUtils.format("<red>Please provide a player name."));
+            return;
         }
         new MainMenu(player, new ArrayList<>(Bukkit.getOnlinePlayers())).open();
     }
