@@ -14,14 +14,11 @@ public class Menu {
     private static final Map<UUID, Menu> openMenus = new HashMap<>();
     private static final Map<String, Set<UUID>> viewers = new HashMap<>();
     private final Map<Integer, MenuClick> menuClickActions = new HashMap<>();
-
     private MenuClick generalClickAction;
     private MenuClick generalInvClickAction;
     private MenuDrag generalDragAction;
-
     private MenuOpen openAction;
     private MenuClose closeAction;
-
     public final UUID uuid;
     private final Inventory inventory;
     private final String viewerID;
@@ -31,13 +28,16 @@ public class Menu {
         inventory = Bukkit.createInventory(null, size, name);
         viewerID = null;
     }
+
     public Menu(int size, Component name, String viewerID){
         uuid = UUID.randomUUID();
         inventory = Bukkit.createInventory(null, size, name);
         this.viewerID = viewerID;
     }
 
-    public static Menu getMenu(Player p){ return openMenus.getOrDefault(p.getUniqueId(), null); }
+    public static Menu getMenu(Player p) {
+        return openMenus.getOrDefault(p.getUniqueId(), null);
+    }
 
     public void open(Player p){
         p.openInventory(inventory);
@@ -60,7 +60,9 @@ public class Menu {
         });
     }
 
-    public UUID getUuid(){ return uuid; }
+    public UUID getUuid() {
+        return uuid;
+    }
 
     public void close(Player p){
         p.closeInventory();

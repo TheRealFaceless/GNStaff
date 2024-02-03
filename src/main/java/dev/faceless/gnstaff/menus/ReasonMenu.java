@@ -19,7 +19,7 @@ public class ReasonMenu extends Menu {
         for (int i = 0; i < reasons.length; i++) {
             Reason reason = reasons[i];
 
-            setItem(i, ItemCreator.create(Material.GREEN_CONCRETE, ChatUtils.formatLegacy("&f" + reason.getName())), (staff, event) -> {
+            setItem(i + 9, ItemCreator.create(Material.GREEN_CONCRETE, ChatUtils.formatLegacy("&f" + reason.getName())), (staff, event) -> {
                 if (action == ModerationAction.BAN
                         || action == ModerationAction.BAN_IP) {
                     DurationMenu durationMenu = new DurationMenu(player, action, reason, this);
@@ -33,5 +33,11 @@ public class ReasonMenu extends Menu {
 
         setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")), (staff, event) ->
                 lastMenu.open(staff));
+
+        for (int i = 0; i < 27; i++) {
+            if (getInventory().getItem(i) == null) {
+                setItem(i, ItemCreator.create(Material.GRAY_STAINED_GLASS_PANE, " "));
+            }
+        }
     }
 }

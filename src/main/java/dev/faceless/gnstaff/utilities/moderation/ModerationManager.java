@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import java.time.Duration;
 
 public class ModerationManager{
-
     private static ModerationManager manager;
 
     public static ModerationManager getManager() {

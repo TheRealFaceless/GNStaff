@@ -5,21 +5,22 @@ import dev.faceless.gnstaff.utilities.ItemCreator;
 import dev.faceless.gnstaff.utilities.Keys;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class PaginatedMenu implements InventoryHolder {
-    protected PlayerMenuUtility playerMenuUtility;
+    protected Player player;
     protected Inventory inventory;
     protected ItemStack fillerGlass = ItemCreator.createNameless(Material.GRAY_STAINED_GLASS_PANE);
     protected int page = 0;
     protected int maxItemsPerPage = 28;
     protected int index = 0;
 
-    public PaginatedMenu(PlayerMenuUtility playerMenuUtility) {
-        this.playerMenuUtility = playerMenuUtility;
+    public PaginatedMenu(Player player) {
+        this.player = player;
     }
 
     @Override
@@ -42,7 +43,7 @@ public abstract class PaginatedMenu implements InventoryHolder {
     public void open() {
         inventory = Bukkit.createInventory(this, getSlots(), getMenuName());
         this.setMenuItems();
-        playerMenuUtility.getOwner().openInventory(inventory);
+        player.openInventory(inventory);
     }
 
     public void addMenuBorder() {

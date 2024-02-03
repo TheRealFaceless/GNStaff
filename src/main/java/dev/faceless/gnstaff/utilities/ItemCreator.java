@@ -19,9 +19,7 @@ public class ItemCreator {
     public static ItemStack createNameless(Material mat) {
         ItemStack item = new ItemStack(mat);
         ItemMeta meta = item.getItemMeta();
-
         meta.displayName(Component.text(""));
-
         item.setItemMeta(meta);
         return item;
     }
@@ -48,7 +46,6 @@ public class ItemCreator {
         ItemStack itemStack = create(mat);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.displayName(name);
-
         if (key != null) {
             itemMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "default");
         }
@@ -60,7 +57,6 @@ public class ItemCreator {
         ItemStack itemStack = create(mat);
         ItemMeta itemMeta = itemStack.getItemMeta();
         itemMeta.setDisplayName(name);
-
         if (key != null) {
             itemMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, "default");
         }
@@ -76,6 +72,7 @@ public class ItemCreator {
         item.setItemMeta(meta);
         return item;
     }
+
     public static ItemStack create(Material mat, Component name, List<Component> lore, boolean hideFlags){
         ItemStack item = create(mat, name, lore);
         ItemMeta meta = item.getItemMeta();
@@ -85,6 +82,7 @@ public class ItemCreator {
         item.setItemMeta(meta);
         return item;
     }
+
     public static ItemStack create(Material mat, Component name, List<Component> lore, boolean hideFlags, boolean isGlowing){
         ItemStack item = create(mat, name, lore, hideFlags);
         ItemMeta meta = item.getItemMeta();

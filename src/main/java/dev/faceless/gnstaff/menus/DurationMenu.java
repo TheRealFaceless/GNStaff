@@ -15,55 +15,55 @@ public class DurationMenu extends Menu {
     public DurationMenu(Player player, ModerationAction action, Reason reason, Menu lastMenu) {
         super(27, Component.text("Duration"));
 
-        setItem(0, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f30 MINUTES")), (staff, event)-> {
+        setItem(9, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f30 MINUTES")), (staff, event)-> {
             Duration duration = Duration.ofMinutes(30);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
         });
 
-        setItem(1, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 HOUR")), (staff, event)-> {
+        setItem(10, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 HOUR")), (staff, event)-> {
             Duration duration = Duration.ofHours(1);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
         });
 
-        setItem(2, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f12 HOURS")), (staff, event)-> {
+        setItem(11, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f12 HOURS")), (staff, event)-> {
             Duration duration = Duration.ofHours(12);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
         });
 
-        setItem(3, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 DAY")), (staff, event)-> {
+        setItem(12, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 DAY")), (staff, event)-> {
             Duration duration = Duration.ofDays(1);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
         });
 
-        setItem(4, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 WEEK")), (staff, event)-> {
+        setItem(13, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 WEEK")), (staff, event)-> {
             Duration duration = Duration.ofDays(7);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
         });
 
-        setItem(5, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 MONTH")), (staff, event)-> {
+        setItem(14, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 MONTH")), (staff, event)-> {
             Duration duration = Duration.ofDays(30);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
         });
 
-        setItem(6, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f3 MONTHS")), (staff, event)-> {
+        setItem(15, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f3 MONTHS")), (staff, event)-> {
             Duration duration = Duration.ofDays(90);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
         });
 
-        setItem(7, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f6 MONTHS")), (staff, event)-> {
+        setItem(16, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f6 MONTHS")), (staff, event)-> {
             Duration duration = Duration.ofDays(180);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
         });
 
-        setItem(8, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 YEAR")), (staff, event)-> {
+        setItem(17, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f1 YEAR")), (staff, event)-> {
             Duration duration = Duration.ofDays(365);
             ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, duration, this);
             menu.open(staff);
@@ -75,5 +75,10 @@ public class DurationMenu extends Menu {
         setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")), (staff, event)->
                 lastMenu.open(staff));
 
+        for (int i = 0; i < 27; i++) {
+            if (getInventory().getItem(i) == null) {
+                setItem(i, ItemCreator.create(Material.GRAY_STAINED_GLASS_PANE, " "));
+            }
+        }
     }
 }

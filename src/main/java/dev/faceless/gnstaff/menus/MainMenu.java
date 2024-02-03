@@ -3,7 +3,6 @@ package dev.faceless.gnstaff.menus;
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.Keys;
 import dev.faceless.gnstaff.utilities.menu.PaginatedMenu;
-import dev.faceless.gnstaff.utilities.menu.PlayerMenuUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -21,8 +20,8 @@ import java.util.UUID;
 import static org.bukkit.Bukkit.getServer;
 
 public class MainMenu extends PaginatedMenu {
-    public MainMenu(PlayerMenuUtility playerMenuUtility) {
-        super(playerMenuUtility);
+    public MainMenu(Player player) {
+        super(player);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class MainMenu extends PaginatedMenu {
         }
     }
 
-    private ItemStack getHead(Player player) {
+    public static ItemStack getHead(Player player) {
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
         playerHeadMeta.setOwner(player.getName());

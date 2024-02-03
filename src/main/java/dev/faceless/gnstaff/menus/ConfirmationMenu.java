@@ -22,6 +22,12 @@ public class ConfirmationMenu extends Menu {
         setItem(5, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&aConfirm")), ((staff, event) ->
                 ModerationManager.getManager().handle(staff, player, action, reason, duration)));
 
+        for (int i = 0; i < 9; i++) {
+            if (getInventory().getItem(i) == null) {
+                setItem(i, ItemCreator.create(Material.GRAY_STAINED_GLASS_PANE, " "));
+            }
+        }
+
     }
 
 }

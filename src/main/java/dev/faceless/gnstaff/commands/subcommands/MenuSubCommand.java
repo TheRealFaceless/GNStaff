@@ -20,7 +20,7 @@ public class MenuSubCommand extends SubCommand {
 
     @Override
     public void onCommand(Player player, String[] args) {
-        new MainMenu(GNStaff.getPlayerMenuUtility(player)).open();
+        new MainMenu(player).open();
     }
 
     @Override

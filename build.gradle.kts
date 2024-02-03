@@ -27,8 +27,6 @@ tasks.withType(JavaCompile::class.java) {
     options.encoding = "UTF-8"
 }
 
-/*
 tasks.jar{
-    destinationDirectory.set(file(""))
+    destinationDirectory.set(file("C:\\Users\\kaden\\OneDrive\\Documents\\[1] My Files\\Development\\Test Server (Paper)\\plugins"))
 }
-*/
