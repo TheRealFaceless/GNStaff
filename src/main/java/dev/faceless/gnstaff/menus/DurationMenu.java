@@ -73,8 +73,13 @@ public class DurationMenu extends Menu {
             menu.open(staff);
         });
         setItem(18, ItemCreator.create(Material.ANVIL, ChatUtils.formatLegacy("&4PERMANENT")), (staff, event)-> {
-            ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, null, this);
-            menu.open(staff);
+            if (action == ModerationAction.BAN || action == ModerationAction.BAN_IP) {
+                ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, null, this);
+                menu.open(staff);
+            } else if (action == ModerationAction.MUTE) {
+                ConfirmationMenu menu = new ConfirmationMenu(player, action, reason, Duration.ofSeconds(Long.MAX_VALUE), this);
+                menu.open(staff);
+            }
         });
         setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")),
                 (staff, event)-> lastMenu.open(staff));

@@ -4,6 +4,7 @@ public enum ModerationAction {
     KICK("Kicked"),
     BAN("Banned"),
     BAN_IP("Ip banned"),
+    MUTE("Muted"),
     WARN("Warned");
 
     private final String verb;
@@ -13,7 +14,6 @@ public enum ModerationAction {
     }
 
     public String getVerb() {
-        return verb;
+        return this.verb;
     }
 }
-

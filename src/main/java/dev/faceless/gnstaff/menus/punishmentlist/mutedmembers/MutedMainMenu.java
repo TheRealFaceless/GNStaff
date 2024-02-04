@@ -1,4 +1,4 @@
-package dev.faceless.gnstaff.menus.punishmentlist.bannedmembers;
+package dev.faceless.gnstaff.menus.punishmentlist.mutedmembers;
 
 import dev.faceless.gnstaff.menus.punishmentlist.PunishmentListMenu;
 import dev.faceless.gnstaff.utilities.ChatUtils;
@@ -22,18 +22,18 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.List;
 import java.util.UUID;
 
-public class BannedMainMenu extends PaginatedMenu {
+public class MutedMainMenu extends PaginatedMenu {
 
-    public List<OfflinePlayer> bannedPlayers;
+    public List<OfflinePlayer> mutedPlayers;
 
-    public BannedMainMenu(Player player, List<OfflinePlayer> bannedPlayers) {
+    public MutedMainMenu(Player player, List<OfflinePlayer> mutedPlayers) {
         super(player);
-        this.bannedPlayers = bannedPlayers;
+        this.mutedPlayers = mutedPlayers;
     }
 
     @Override
     public String getMenuName() {
-        return "Banned Members";
+        return "Muted Members";
     }
 
     @Override
@@ -44,12 +44,12 @@ public class BannedMainMenu extends PaginatedMenu {
     @Override
     public void setMenuItems() {
         this.addMenuBorder();
-        if (!bannedPlayers.isEmpty()) {
+        if (!mutedPlayers.isEmpty()) {
             for (int i = 0; i < getMaxItemsPerPage(); i++) {
                 index = getMaxItemsPerPage() * page + i;
-                if (index >= bannedPlayers.size()) break;
-                if (bannedPlayers.get(index) != null) {
-                    OfflinePlayer p = bannedPlayers.get(index);
+                if (index >= mutedPlayers.size()) break;
+                if (mutedPlayers.get(index) != null) {
+                    OfflinePlayer p = mutedPlayers.get(index);
                     ItemStack playerHead = getHead(p);
                     ItemMeta playerHeadMeta = playerHead.getItemMeta();
                     playerHeadMeta.setDisplayName(ChatUtils.formatLegacy("&d&l" + p.getName()));
@@ -92,9 +92,9 @@ public class BannedMainMenu extends PaginatedMenu {
                 String targetUUID = playerHeadMeta.getPersistentDataContainer().get(Keys.UUID, PersistentDataType.STRING);
                 OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(targetUUID));
 
-                BannedPlayerMenu bannedPlayerMenu = new BannedPlayerMenu(player);
+                MutedPlayerMenu mutedPlayerMenu = new MutedPlayerMenu(player);
+                mutedPlayerMenu.open(staff);
                 SoundUtil.UI_CLICK(staff);
-                bannedPlayerMenu.open(staff);
             }
 
             case BARRIER -> {
@@ -114,7 +114,7 @@ public class BannedMainMenu extends PaginatedMenu {
                     }
                     SoundUtil.UI_CLICK(staff);
                 } else if (itemMeta.getPersistentDataContainer().has(Keys.NEXT_PAGE)) {
-                    if (!((index + 1) >= bannedPlayers.size())) {
+                    if (!((index + 1) >= mutedPlayers.size())) {
                         page++;
                         super.open();
                     } else {
@@ -126,7 +126,7 @@ public class BannedMainMenu extends PaginatedMenu {
 
             case OAK_SIGN -> {
                 staff.closeInventory();
-                staff.getPersistentDataContainer().set(Keys.SEARCHING_BANNED, PersistentDataType.STRING, "");
+                staff.getPersistentDataContainer().set(Keys.SEARCHING_MUTED, PersistentDataType.STRING, "");
                 staff.sendMessage(ChatUtils.format("<red>Type player name in chat."));
             }
         }

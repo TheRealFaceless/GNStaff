@@ -12,11 +12,9 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 public class ReasonMenu extends Menu {
-
     public ReasonMenu(ModerationAction action, Player player, Menu lastMenu) {
         super(27, Component.text("Reason"));
-        setOpenAction((SoundUtil::MENU_OPEN));
-        setCloseAction(SoundUtil::MENU_CLOSE);
+        setOpenAction(SoundUtil::MENU_OPEN);
 
         Reason[] reasons = Reason.values();
 
@@ -24,8 +22,7 @@ public class ReasonMenu extends Menu {
             Reason reason = reasons[i];
 
             setItem(i + 9, ItemCreator.create(Material.GREEN_CONCRETE, ChatUtils.formatLegacy("&f" + reason.getName())), (staff, event) -> {
-                if (action == ModerationAction.BAN
-                        || action == ModerationAction.BAN_IP) {
+                if (action == ModerationAction.BAN || action == ModerationAction.BAN_IP || action == ModerationAction.MUTE) {
                     DurationMenu durationMenu = new DurationMenu(player, action, reason, this);
                     durationMenu.open(staff);
                 } else {
@@ -34,10 +31,7 @@ public class ReasonMenu extends Menu {
                 }
             });
         }
-
-        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")),
-                (staff, event) -> lastMenu.open(staff));
-
+        setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")), (staff, event) -> lastMenu.open(staff));
         MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
     }
 }

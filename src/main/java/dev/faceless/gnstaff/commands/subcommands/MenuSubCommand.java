@@ -22,7 +22,9 @@ public class MenuSubCommand extends SubCommand {
 
     @Override
     public void onCommand(Player player, String[] args) {
-        if(player.getPersistentDataContainer().has(Keys.SEARCHING)) {
+        if(player.getPersistentDataContainer().has(Keys.SEARCHING)
+                || player.getPersistentDataContainer().has(Keys.SEARCHING_BANNED)
+                || player.getPersistentDataContainer().has(Keys.SEARCHING_MUTED)) {
             player.sendMessage(ChatUtils.format("<red>Please provide a player name."));
             return;
         }

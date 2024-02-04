@@ -2,11 +2,13 @@ package dev.faceless.gnstaff.menus.punishmentlist;
 
 import dev.faceless.gnstaff.menus.MainMenu;
 import dev.faceless.gnstaff.menus.punishmentlist.bannedmembers.BannedMainMenu;
+import dev.faceless.gnstaff.menus.punishmentlist.mutedmembers.MutedMainMenu;
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.ItemCreator;
 import dev.faceless.gnstaff.utilities.SoundUtil;
 import dev.faceless.gnstaff.utilities.menu.Menu;
 import dev.faceless.gnstaff.utilities.menu.MenuUtils;
+import dev.faceless.gnstaff.utilities.moderation.MuteManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -27,7 +29,8 @@ public class PunishmentListMenu extends Menu {
         }));
 
         setItem(14, ItemCreator.create(Material.WRITABLE_BOOK, ChatUtils.formatLegacy("&cMuted Players")), ((staff, event) -> {
-            // Open Muted Players Menu
+            List<OfflinePlayer> mutedPlayers = new ArrayList<>(MuteManager.getManager().getMutedPlayers());
+            new MutedMainMenu(staff, mutedPlayers).open();
         }));
 
         setItem(getInventory().getSize() - 1, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&cBack")), ((staff, event) -> {
