@@ -98,7 +98,6 @@ public class MutedMainMenu extends PaginatedMenu {
             }
 
             case BARRIER -> {
-                SoundUtil.UI_BACK(staff);
                 new PunishmentListMenu().open(staff);
             }
 
