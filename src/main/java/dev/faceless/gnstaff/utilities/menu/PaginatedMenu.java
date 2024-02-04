@@ -52,5 +52,6 @@ public abstract class PaginatedMenu implements InventoryHolder {
         inventory.setItem(49, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&4&lClose"), Keys.CLOSE));
         inventory.setItem(50, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&a&lNext Page"), Keys.NEXT_PAGE));
         inventory.setItem(53, ItemCreator.create(Material.OAK_SIGN, ChatUtils.formatLegacy("&a&lSearch")));
+        inventory.setItem(45, ItemCreator.create(Material.WRITABLE_BOOK, ChatUtils.formatLegacy("&c&lPunished Members")));
     }
 }

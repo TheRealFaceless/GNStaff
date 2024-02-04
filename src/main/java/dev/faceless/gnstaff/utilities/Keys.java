@@ -17,4 +17,5 @@ public class Keys {
     public static final NamespacedKey CLOSE = new NamespacedKey(plugin, "close");
 
     public static final NamespacedKey SEARCHING = new NamespacedKey(plugin, "searching_for_player");
+    public static final NamespacedKey SEARCHING_BANNED = new NamespacedKey(plugin, "searching_for_banned_player");
 }

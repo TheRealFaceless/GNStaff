@@ -1,10 +1,12 @@
-package dev.faceless.gnstaff.menus;
+package dev.faceless.gnstaff.menus.punishmentlist.bannedmembers;
 
+import dev.faceless.gnstaff.menus.MainMenu;
 import dev.faceless.gnstaff.menus.punishmentlist.PunishmentListMenu;
-import dev.faceless.gnstaff.menus.punishmentlist.bannedmembers.BannedMainMenu;
 import dev.faceless.gnstaff.utilities.ChatUtils;
+import dev.faceless.gnstaff.utilities.ItemCreator;
 import dev.faceless.gnstaff.utilities.Keys;
 import dev.faceless.gnstaff.utilities.SoundUtil;
+import dev.faceless.gnstaff.utilities.menu.MenuUtils;
 import dev.faceless.gnstaff.utilities.menu.PaginatedMenu;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -22,18 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class MainMenu extends PaginatedMenu {
+public class BannedMainMenu extends PaginatedMenu {
 
-    public ArrayList<Player> onlinePlayers;
+    public List<OfflinePlayer> bannedPlayers;
 
-    public MainMenu(Player player, ArrayList<Player> onlinePlayers) {
+    public BannedMainMenu(Player player, List<OfflinePlayer> bannedPlayers) {
         super(player);
-        this.onlinePlayers = onlinePlayers;
+        this.bannedPlayers = bannedPlayers;
     }
 
     @Override
     public String getMenuName() {
-        return "Player Manager";
+        return "Banned Members";
     }
 
     @Override
@@ -43,16 +45,16 @@ public class MainMenu extends PaginatedMenu {
 
     @Override
     public void setMenuItems() {
-        addMenuBorder();
-        if (!onlinePlayers.isEmpty()) {
+        this.addMenuBorder();
+        if (!bannedPlayers.isEmpty()) {
             for (int i = 0; i < getMaxItemsPerPage(); i++) {
                 index = getMaxItemsPerPage() * page + i;
-                if (index >= onlinePlayers.size()) break;
-                if (onlinePlayers.get(index) != null) {
-                    Player p = onlinePlayers.get(index);
+                if (index >= bannedPlayers.size()) break;
+                if (bannedPlayers.get(index) != null) {
+                    OfflinePlayer p = bannedPlayers.get(index);
                     ItemStack playerHead = getHead(p);
                     ItemMeta playerHeadMeta = playerHead.getItemMeta();
-                    playerHeadMeta.setDisplayName(ChatUtils.formatLegacy("&d&l" + p.getDisplayName()));
+                    playerHeadMeta.setDisplayName(ChatUtils.formatLegacy("&d&l" + p.getName()));
                     playerHeadMeta.getPersistentDataContainer().set(Keys.UUID, PersistentDataType.STRING, p.getUniqueId().toString());
                     playerHead.setItemMeta(playerHeadMeta);
                     inventory.addItem(playerHead);
@@ -61,7 +63,15 @@ public class MainMenu extends PaginatedMenu {
         }
     }
 
-    public static ItemStack getHead(Player player) {
+    public void addMenuBorder() {
+        MenuUtils.addBorders(inventory, fillerGlass);
+        inventory.setItem(48, ItemCreator.create(Material.RED_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&c&lPrevious Page"), Keys.PREVIOUS_PAGE));
+        inventory.setItem(49, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&4&lBack"), Keys.CLOSE));
+        inventory.setItem(50, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&a&lNext Page"), Keys.NEXT_PAGE));
+        inventory.setItem(53, ItemCreator.create(Material.OAK_SIGN, ChatUtils.formatLegacy("&a&lSearch")));
+    }
+
+    public static ItemStack getHead(OfflinePlayer player) {
         ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
         playerHeadMeta.setOwner(player.getName());
@@ -82,17 +92,16 @@ public class MainMenu extends PaginatedMenu {
                 }
 
                 String targetUUID = playerHeadMeta.getPersistentDataContainer().get(Keys.UUID, PersistentDataType.STRING);
-                Player player = Bukkit.getPlayer(UUID.fromString(targetUUID));
-                if (player == null) return;
+                OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(targetUUID));
 
-                PlayerMenu playerMenu = new PlayerMenu(player);
+                BannedPlayerMenu bannedPlayerMenu = new BannedPlayerMenu(player);
                 SoundUtil.UI_CLICK(staff);
-                playerMenu.open(staff);
+                bannedPlayerMenu.open(staff);
             }
 
             case BARRIER -> {
                 SoundUtil.UI_BACK(staff);
-                staff.closeInventory();
+                new PunishmentListMenu().open(staff);
             }
 
             case RED_STAINED_GLASS_PANE, GREEN_STAINED_GLASS_PANE -> {
@@ -107,7 +116,7 @@ public class MainMenu extends PaginatedMenu {
                     }
                     SoundUtil.UI_CLICK(staff);
                 } else if (itemMeta.getPersistentDataContainer().has(Keys.NEXT_PAGE)) {
-                    if (!((index + 1) >= onlinePlayers.size())) {
+                    if (!((index + 1) >= bannedPlayers.size())) {
                         page++;
                         super.open();
                     } else {
@@ -116,13 +125,11 @@ public class MainMenu extends PaginatedMenu {
                     SoundUtil.UI_CLICK(staff);
                 }
             }
+
             case OAK_SIGN -> {
                 staff.closeInventory();
-                staff.getPersistentDataContainer().set(Keys.SEARCHING, PersistentDataType.STRING, "");
+                staff.getPersistentDataContainer().set(Keys.SEARCHING_BANNED, PersistentDataType.STRING, "");
                 staff.sendMessage(ChatUtils.format("<red>Type player name in chat."));
-            }
-            case WRITABLE_BOOK -> {
-                new PunishmentListMenu().open(staff);
             }
         }
 
