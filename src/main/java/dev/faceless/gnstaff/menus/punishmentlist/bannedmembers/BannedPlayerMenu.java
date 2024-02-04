@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 
 public class BannedPlayerMenu extends Menu {
-
     public BannedPlayerMenu(OfflinePlayer player) {
         super(27, Component.text("Manage " + player.getName()));
         setOpenAction((SoundUtil::MENU_OPEN));
@@ -68,4 +67,3 @@ public class BannedPlayerMenu extends Menu {
         return "(Unknown)";
     }
 }
-

@@ -39,6 +39,10 @@ public class Menu {
         return openMenus.getOrDefault(p.getUniqueId(), null);
     }
 
+    public UUID getUuid() {
+        return uuid;
+    }
+
     public void open(Player p){
         p.openInventory(inventory);
         openMenus.put(p.getUniqueId(), this);
@@ -58,10 +62,6 @@ public class Menu {
             }
             return false;
         });
-    }
-
-    public UUID getUuid() {
-        return uuid;
     }
 
     public void close(Player p){
@@ -103,31 +103,69 @@ public class Menu {
         return viewerList;
     }
 
-    public MenuClick getAction(int index){ return menuClickActions.getOrDefault(index, null); }
+    public MenuClick getAction(int index) {
+        return menuClickActions.getOrDefault(index, null);
+    }
 
-    public MenuClick getGeneralClickAction() { return generalClickAction; }
-    protected void setGeneralClickAction(MenuClick generalClickAction) { this.generalClickAction = generalClickAction; }
+    public MenuClick getGeneralClickAction() {
+        return generalClickAction;
+    }
 
-    public MenuClick getGeneralInvClickAction() { return generalInvClickAction; }
-    protected void setGeneralInvClickAction(MenuClick generalInvClickAction) { this.generalInvClickAction = generalInvClickAction; }
+    protected void setGeneralClickAction(MenuClick generalClickAction) {
+        this.generalClickAction = generalClickAction;
+    }
 
-    public MenuDrag getGeneralDragAction() { return generalDragAction; }
-    protected void setGeneralDragAction(MenuDrag generalDragAction) { this.generalDragAction = generalDragAction; }
+    public MenuClick getGeneralInvClickAction() {
+        return generalInvClickAction;
+    }
 
-    protected void setOpenAction(MenuOpen openAction) { this.openAction = openAction; }
-    protected void setCloseAction(MenuClose closeAction) { this.closeAction = closeAction; }
+    protected void setGeneralInvClickAction(MenuClick generalInvClickAction) {
+        this.generalInvClickAction = generalInvClickAction;
+    }
 
-    public interface MenuClick{  void click(Player p, InventoryClickEvent event); }
-    public interface MenuDrag{  void drag(Player p, InventoryDragEvent event); }
-    public interface MenuOpen{  void open(Player p); }
-    public interface MenuClose{  void close(Player p); }
+    public MenuDrag getGeneralDragAction() {
+        return generalDragAction;
+    }
 
-    public void setItem(int index, ItemStack item){ inventory.setItem(index, item); }
-    public void setItem(int index, ItemStack item, MenuClick action){
+    protected void setGeneralDragAction(MenuDrag generalDragAction) {
+        this.generalDragAction = generalDragAction;
+    }
+
+    protected void setOpenAction(MenuOpen openAction) {
+        this.openAction = openAction;
+    }
+
+    protected void setCloseAction(MenuClose closeAction) {
+        this.closeAction = closeAction;
+    }
+
+    public void setItem(int index, ItemStack item) {
+        inventory.setItem(index, item);
+    }
+
+    public void setItem(int index, ItemStack item, MenuClick action) {
         inventory.setItem(index, item);
         if(action == null) menuClickActions.remove(index);
         else menuClickActions.put(index, action);
     }
 
-    public Inventory getInventory(){ return inventory; }
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public interface MenuClick {
+        void click(Player p, InventoryClickEvent event);
+    }
+
+    public interface MenuDrag {
+        void drag(Player p, InventoryDragEvent event);
+    }
+
+    public interface MenuOpen {
+        void open(Player p);
+    }
+
+    public interface MenuClose {
+        void close(Player p);
+    }
 }

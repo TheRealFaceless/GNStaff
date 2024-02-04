@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class ChatUtils {
-
     public static void sendMessage(Player player, String message) {
         MiniMessage miniMessage = MiniMessage.miniMessage();
         Component component = miniMessage.deserialize(message);

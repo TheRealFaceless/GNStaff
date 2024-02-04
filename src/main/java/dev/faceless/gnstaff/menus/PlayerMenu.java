@@ -6,11 +6,12 @@ import dev.faceless.gnstaff.utilities.SoundUtil;
 import dev.faceless.gnstaff.utilities.menu.Menu;
 import dev.faceless.gnstaff.utilities.menu.MenuUtils;
 import dev.faceless.gnstaff.utilities.moderation.ModerationAction;
-import java.util.ArrayList;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
 
 public class PlayerMenu extends Menu {
     public PlayerMenu(Player player) {
@@ -38,7 +39,7 @@ public class PlayerMenu extends Menu {
             reasonMenu.open(staff);
         });
         setItem(17, ItemCreator.create(Material.PURPLE_CONCRETE, ChatUtils.formatLegacy("&5Tp")), (staff, event) -> {
-            ConfirmationMenu confirmationMenu = new ConfirmationMenu(player, null, null, null, this);
+            TPConfirmationMenu confirmationMenu = new TPConfirmationMenu(player, this);
             confirmationMenu.open(staff);
         });
 

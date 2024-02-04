@@ -29,7 +29,6 @@ public class BaseCommand implements TabExecutor {
             return true;
         }
         if(!player.hasPermission("permission.gnstaff.command") || !player.isOp())return true;
-
         if (args.length == 0) {
             ChatUtils.sendMessage(player, "<dark_gray>===============================================");
             for (String command : commands.keySet()) {
@@ -41,19 +40,10 @@ public class BaseCommand implements TabExecutor {
             ChatUtils.sendMessage(player, "<dark_gray>===============================================");
             return true;
         }
-
         SubCommand command = getCommand(args[0]);
-
-        if (command == null) {
-            return true;
-        }
-
-        if (command.getPermission() != null && !player.hasPermission(command.getPermission())) {
-            return true;
-        }
-
+        if (command == null) return true;
+        if (command.getPermission() != null && !player.hasPermission(command.getPermission())) return true;
         command.onCommand(player, args);
-
         return true;
     }
 
@@ -77,23 +67,14 @@ public class BaseCommand implements TabExecutor {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player player)) return null;
-
         if (args.length == 1) {
             return commands.keySet().stream()
                     .filter(command -> command != null && command.startsWith(args[0]))
                     .collect(Collectors.toList());
         }
-
         SubCommand command = getCommand(args[0]);
-
-        if (command == null) {
-            return null;
-        }
-
-        if (command.getPermission() != null && !player.hasPermission(command.getPermission())) {
-            return null;
-        }
-
+        if (command == null) return null;
+        if (command.getPermission() != null && !player.hasPermission(command.getPermission())) return null;
         return command.onTabComplete(player, args);
     }
 }

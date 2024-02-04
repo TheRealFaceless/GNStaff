@@ -6,7 +6,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class MenuUtils {
-    
     public static void addBorders(Inventory inventory, Material mat) {
         ItemStack item = ItemCreator.createNameless(mat);
         int size = inventory.getSize();

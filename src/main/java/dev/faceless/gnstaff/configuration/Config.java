@@ -1,19 +1,17 @@
 package dev.faceless.gnstaff.configuration;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Config {
     private File configFile;
-
     private final JavaPlugin plugin;
-
     private FileConfiguration config;
-
     private File configFolder;
 
     public Config(String folderName, String filename, JavaPlugin plugin) {
@@ -24,6 +22,18 @@ public class Config {
     public Config(String filename, JavaPlugin plugin) {
         this.plugin = plugin;
         init(null, filename);
+    }
+
+    public FileConfiguration getConfig() {
+        return this.config;
+    }
+
+    public File getConfigFile() {
+        return this.configFile;
+    }
+
+    public File getConfigFolder() {
+        return this.configFolder;
     }
 
     private void init(String folderName, String filename) {
@@ -56,7 +66,7 @@ public class Config {
                 }
             this.configFolder = configFolder;
         }
-        this.config = (FileConfiguration)YamlConfiguration.loadConfiguration(this.configFile);
+        this.config = YamlConfiguration.loadConfiguration(this.configFile);
     }
 
     public void saveConfig() {
@@ -84,17 +94,5 @@ public class Config {
         } catch (IOException|org.bukkit.configuration.InvalidConfigurationException e) {
             throw new RuntimeException("Failed to save configuration: " + this.configFile, e);
         }
-    }
-
-    public FileConfiguration getConfig() {
-        return this.config;
-    }
-
-    public File getConfigFile() {
-        return this.configFile;
-    }
-
-    public File getConfigFolder() {
-        return this.configFolder;
     }
 }

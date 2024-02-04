@@ -2,28 +2,22 @@ package dev.faceless.gnstaff.menus.punishmentlist.mutedmembers;
 
 import dev.faceless.gnstaff.menus.punishmentlist.PunishmentListMenu;
 import dev.faceless.gnstaff.utilities.ChatUtils;
-import dev.faceless.gnstaff.utilities.ItemCreator;
+import dev.faceless.gnstaff.utilities.HeadUtils;
 import dev.faceless.gnstaff.utilities.Keys;
 import dev.faceless.gnstaff.utilities.SoundUtil;
-import dev.faceless.gnstaff.utilities.menu.MenuUtils;
 import dev.faceless.gnstaff.utilities.menu.PaginatedMenu;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 import java.util.UUID;
 
 public class MutedMainMenu extends PaginatedMenu {
-
     public List<OfflinePlayer> mutedPlayers;
 
     public MutedMainMenu(Player player, List<OfflinePlayer> mutedPlayers) {
@@ -43,14 +37,14 @@ public class MutedMainMenu extends PaginatedMenu {
 
     @Override
     public void setMenuItems() {
-        this.addMenuBorder();
+        addPunishmentMenuBorder();
         if (!mutedPlayers.isEmpty()) {
             for (int i = 0; i < getMaxItemsPerPage(); i++) {
                 index = getMaxItemsPerPage() * page + i;
                 if (index >= mutedPlayers.size()) break;
                 if (mutedPlayers.get(index) != null) {
                     OfflinePlayer p = mutedPlayers.get(index);
-                    ItemStack playerHead = getHead(p);
+                    ItemStack playerHead = HeadUtils.getHead(p);
                     ItemMeta playerHeadMeta = playerHead.getItemMeta();
                     playerHeadMeta.setDisplayName(ChatUtils.formatLegacy("&d&l" + p.getName()));
                     playerHeadMeta.getPersistentDataContainer().set(Keys.UUID, PersistentDataType.STRING, p.getUniqueId().toString());
@@ -61,22 +55,6 @@ public class MutedMainMenu extends PaginatedMenu {
         }
     }
 
-    public void addMenuBorder() {
-        MenuUtils.addBorders(inventory, fillerGlass);
-        inventory.setItem(48, ItemCreator.create(Material.RED_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&c&lPrevious Page"), Keys.PREVIOUS_PAGE));
-        inventory.setItem(49, ItemCreator.create(Material.BARRIER, ChatUtils.formatLegacy("&4&lBack"), Keys.CLOSE));
-        inventory.setItem(50, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&a&lNext Page"), Keys.NEXT_PAGE));
-        inventory.setItem(53, ItemCreator.create(Material.OAK_SIGN, ChatUtils.formatLegacy("&a&lSearch")));
-    }
-
-    public static ItemStack getHead(OfflinePlayer player) {
-        ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD, 1);
-        SkullMeta playerHeadMeta = (SkullMeta) playerHead.getItemMeta();
-        playerHeadMeta.setOwner(player.getName());
-        playerHead.setItemMeta(playerHeadMeta);
-        return playerHead;
-    }
-
     @Override
     public void handleMenu(InventoryClickEvent e) {
         Player staff = (Player) e.getWhoClicked();
@@ -84,14 +62,9 @@ public class MutedMainMenu extends PaginatedMenu {
             case PLAYER_HEAD -> {
                 ItemStack playerHead = e.getCurrentItem();
                 ItemMeta playerHeadMeta = playerHead.getItemMeta();
-
-                if (!playerHeadMeta.getPersistentDataContainer().has(Keys.UUID, PersistentDataType.STRING)) {
-                    return;
-                }
-
+                if (!playerHeadMeta.getPersistentDataContainer().has(Keys.UUID, PersistentDataType.STRING)) return;
                 String targetUUID = playerHeadMeta.getPersistentDataContainer().get(Keys.UUID, PersistentDataType.STRING);
                 OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(targetUUID));
-
                 MutedPlayerMenu mutedPlayerMenu = new MutedPlayerMenu(player);
                 mutedPlayerMenu.open(staff);
                 SoundUtil.UI_CLICK(staff);
@@ -103,22 +76,11 @@ public class MutedMainMenu extends PaginatedMenu {
 
             case RED_STAINED_GLASS_PANE, GREEN_STAINED_GLASS_PANE -> {
                 ItemMeta itemMeta = e.getCurrentItem().getItemMeta();
-
                 if (itemMeta.getPersistentDataContainer().has(Keys.PREVIOUS_PAGE)) {
-                    if (page == 0) {
-                        staff.sendMessage(Component.text("[GN Staff] You are already on the first page!", NamedTextColor.RED));
-                    } else {
-                        page--;
-                        super.open();
-                    }
+                    goPreviousPage(staff);
                     SoundUtil.UI_CLICK(staff);
                 } else if (itemMeta.getPersistentDataContainer().has(Keys.NEXT_PAGE)) {
-                    if (!((index + 1) >= mutedPlayers.size())) {
-                        page++;
-                        super.open();
-                    } else {
-                        staff.sendMessage(Component.text("[GN Staff] You are already on the last page!", NamedTextColor.RED));
-                    }
+                    goNextPage(staff, mutedPlayers);
                     SoundUtil.UI_CLICK(staff);
                 }
             }
@@ -129,6 +91,5 @@ public class MutedMainMenu extends PaginatedMenu {
                 staff.sendMessage(ChatUtils.format("<red>Type player name in chat."));
             }
         }
-
     }
 }

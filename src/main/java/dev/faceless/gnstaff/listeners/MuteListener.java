@@ -14,7 +14,7 @@ public class MuteListener implements Listener {
         Player player = event.getPlayer();
         if (MuteManager.getManager().isMuted(player)) {
             event.setCancelled(true);
-            player.sendMessage(ChatUtils.format("<red>You are Currently muted for " + MuteManager.getManager().getMuteDuration(player)));
+            player.sendMessage(ChatUtils.format("<red>You are currently muted for " + MuteManager.getManager().getMuteDuration(player)));
         }
     }
 }

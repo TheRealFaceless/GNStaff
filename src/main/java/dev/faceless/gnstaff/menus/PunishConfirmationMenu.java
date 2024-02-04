@@ -14,28 +14,18 @@ import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
-public class ConfirmationMenu extends Menu {
-
-    public ConfirmationMenu(Player player, ModerationAction action, Reason reason, Duration duration, Menu lastMenu) {
+public class PunishConfirmationMenu extends Menu {
+    public PunishConfirmationMenu(Player player, ModerationAction action, Reason reason, Duration duration, Menu lastMenu) {
         super(9, Component.text("Confirmation Menu"));
         setOpenAction((SoundUtil::MENU_OPEN));
         setCloseAction(SoundUtil::MENU_CLOSE);
 
         setItem(3, ItemCreator.create(Material.RED_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&cCancel")),
                 ((staff, event) -> lastMenu.open(staff)));
-
-
         setItem(5, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&aConfirm")), ((staff, event) -> {
-            if (action == null) {
-                staff.performCommand("vanish");
-                staff.teleport(player.getLocation());
-            } else {
-                ModerationManager.getManager().handle(staff, player, action, reason, duration);
-            }
+            ModerationManager.getManager().handle(staff, player, action, reason, duration);
         }));
 
         MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
-
     }
-
 }

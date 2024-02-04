@@ -15,21 +15,24 @@ public class GNStaff extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Initialization
         plugin = this;
-
-        registerCommands();
-        registerListeners();
         ConfigManager.getManager().register(this);
         MuteManager.getManager().loadMuteData();
+
+        // Commands
+        registerCommands();
+
+        // Listeners
+        registerListeners();
     }
 
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new PaginatedMenuListener(), this);
-        getServer().getPluginManager().registerEvents(new StaffTypePlayerNameListener(), this);
+        getServer().getPluginManager().registerEvents(new SearchListener(), this);
         getServer().getPluginManager().registerEvents(new MuteListener(), this);
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
-
     }
 
     public void registerCommands() {

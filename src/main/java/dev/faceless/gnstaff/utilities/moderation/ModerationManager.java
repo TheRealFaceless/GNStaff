@@ -2,10 +2,10 @@ package dev.faceless.gnstaff.utilities.moderation;
 
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.SoundUtil;
-import java.time.Duration;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
 
 public class ModerationManager {
     private static ModerationManager manager;

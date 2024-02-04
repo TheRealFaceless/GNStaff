@@ -1,13 +1,12 @@
 package dev.faceless.gnstaff.menus.punishmentlist.mutedmembers;
 
-import dev.faceless.gnstaff.utilities.menu.Menu;
-import dev.faceless.gnstaff.utilities.moderation.MuteManager;
-import net.kyori.adventure.text.Component;
-
 import dev.faceless.gnstaff.utilities.ChatUtils;
 import dev.faceless.gnstaff.utilities.ItemCreator;
 import dev.faceless.gnstaff.utilities.SoundUtil;
+import dev.faceless.gnstaff.utilities.menu.Menu;
 import dev.faceless.gnstaff.utilities.menu.MenuUtils;
+import dev.faceless.gnstaff.utilities.moderation.MuteManager;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MutedPlayerMenu extends Menu {
-
     public MutedPlayerMenu(OfflinePlayer player) {
         super(27, Component.text("Manage " + player.getName()));
         setOpenAction((SoundUtil::MENU_OPEN));
@@ -44,5 +42,4 @@ public class MutedPlayerMenu extends Menu {
 
         MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
     }
-
 }

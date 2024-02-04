@@ -1,9 +1,9 @@
 package dev.faceless.gnstaff.listeners;
 
 import dev.faceless.gnstaff.utilities.menu.Menu;
-import org.bukkit.event.Listener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -27,14 +27,12 @@ public class MenuListener implements Listener {
         if(menu != null){
             event.setCancelled(true);
             if(event.getClickedInventory() != null){
-
                 if(event.getRawSlot() >= p.getOpenInventory().getTopInventory().getSize()){
                     if(menu.getGeneralInvClickAction() != null) menu.getGeneralInvClickAction().click(p, event);
                 }else if(menu.getGeneralClickAction() != null){
                     menu.getGeneralClickAction().click(p, event);
                 }
             }
-
             Menu.MenuClick menuClick = menu.getAction(event.getRawSlot());
             if(menuClick != null) menuClick.click(p, event);
         }

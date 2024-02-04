@@ -1,13 +1,17 @@
 package dev.faceless.gnstaff.configuration;
 
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class ConfigManager {
     private final Map<String, Config> configs = new HashMap<>();
-
     private static ConfigManager manager;
+
+    public Config getConfig(String id) {
+        return this.configs.getOrDefault(id, null);
+    }
 
     public static ConfigManager getManager() {
         return (manager == null) ? (manager = new ConfigManager()) : manager;
@@ -23,10 +27,6 @@ public class ConfigManager {
 
     public void register(String id, String filename, JavaPlugin plugin) {
         this.configs.putIfAbsent(id, new Config(filename, plugin));
-    }
-
-    public Config getConfig(String id) {
-        return this.configs.getOrDefault(id, null);
     }
 
     public void reloadConfigs() {

@@ -6,7 +6,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinListener implements Listener {
-
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         if(e.getPlayer().getPersistentDataContainer().has(Keys.SEARCHING)){

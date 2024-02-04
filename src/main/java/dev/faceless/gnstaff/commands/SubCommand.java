@@ -6,22 +6,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.List;
 
 public abstract class SubCommand {
-
     protected final JavaPlugin plugin;
-
-    public SubCommand(JavaPlugin plugin) {
-        this.plugin = plugin;
-    }
-
     private String name;
     private String description;
     private String syntax;
     private String permission;
     private List<String> aliases;
 
-    public abstract void onCommand(Player player, String[] args);
-
-    public abstract List<String> onTabComplete(Player player, String[] args);
+    public SubCommand(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     public String getName() {
         return name;
@@ -63,4 +57,7 @@ public abstract class SubCommand {
         this.aliases = aliases;
     }
 
+    public abstract void onCommand(Player player, String[] args);
+
+    public abstract List<String> onTabComplete(Player player, String[] args);
 }

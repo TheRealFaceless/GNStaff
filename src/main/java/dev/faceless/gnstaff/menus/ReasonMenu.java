@@ -26,7 +26,7 @@ public class ReasonMenu extends Menu {
                     DurationMenu durationMenu = new DurationMenu(player, action, reason, this);
                     durationMenu.open(staff);
                 } else {
-                    ConfirmationMenu confirmationMenu = new ConfirmationMenu(player, action, reason, null, this);
+                    PunishConfirmationMenu confirmationMenu = new PunishConfirmationMenu(player, action, reason, null, this);
                     confirmationMenu.open(staff);
                 }
             });

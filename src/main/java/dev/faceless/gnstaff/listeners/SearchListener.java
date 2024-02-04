@@ -18,8 +18,7 @@ import org.bukkit.event.player.PlayerChatEvent;
 
 import java.util.ArrayList;
 
-public class StaffTypePlayerNameListener implements Listener {
-
+public class SearchListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onChat(PlayerChatEvent event) {
         if (MuteManager.getManager().isMuted(event.getPlayer())) {
@@ -31,14 +30,15 @@ public class StaffTypePlayerNameListener implements Listener {
             }
             return;
         }
-
-        if (!event.getPlayer().getPersistentDataContainer().has(Keys.SEARCHING) && !event.getPlayer().getPersistentDataContainer().has(Keys.SEARCHING_BANNED) && !event.getPlayer().getPersistentDataContainer().has(Keys.SEARCHING_MUTED)) {
+        if (!event.getPlayer().getPersistentDataContainer().has(Keys.SEARCHING) &&
+                !event.getPlayer().getPersistentDataContainer().has(Keys.SEARCHING_BANNED) &&
+                !event.getPlayer().getPersistentDataContainer().has(Keys.SEARCHING_MUTED)) {
             return;
         }
 
-        Player player = event.getPlayer();
         event.setCancelled(true);
 
+        Player player = event.getPlayer();
         String message = event.getMessage();
         message = ChatColor.stripColor(message);
         message = MiniMessage.miniMessage().stripTags(message).strip();
@@ -50,14 +50,12 @@ public class StaffTypePlayerNameListener implements Listener {
                     .stream()
                     .filter((p) -> p.getName().startsWith(name))
                     .forEach(mutedPlayers::add);
-
             if (mutedPlayers.isEmpty()) {
                 player.sendMessage(ChatUtils.format("<red>Player not found"));
                 player.getPersistentDataContainer().remove(Keys.SEARCHING_MUTED);
                 new MutedMainMenu(player, new ArrayList<>(MuteManager.getManager().getMutedPlayers())).open();
                 return;
             }
-
             new MutedMainMenu(player, mutedPlayers).open();
             player.getPersistentDataContainer().remove(Keys.SEARCHING_MUTED);
         } else if (event.getPlayer().getPersistentDataContainer().has(Keys.SEARCHING)) {
@@ -66,7 +64,6 @@ public class StaffTypePlayerNameListener implements Listener {
                     .stream()
                     .filter((p) -> p.getName().startsWith(name))
                     .forEach(players::add);
-
             if (players.isEmpty()) {
                 player.sendMessage(ChatUtils.format("<red>Player not found"));
                 player.getPersistentDataContainer().remove(Keys.SEARCHING);
@@ -81,7 +78,6 @@ public class StaffTypePlayerNameListener implements Listener {
                     .stream()
                     .filter((p) -> p.getName().startsWith(name))
                     .forEach(bannedPlayers::add);
-
             if (bannedPlayers.isEmpty()) {
                 player.sendMessage(ChatUtils.format("<red>Player not found"));
                 player.getPersistentDataContainer().remove(Keys.SEARCHING_BANNED);
@@ -92,5 +88,4 @@ public class StaffTypePlayerNameListener implements Listener {
             player.getPersistentDataContainer().remove(Keys.SEARCHING_BANNED);
         }
     }
-
 }

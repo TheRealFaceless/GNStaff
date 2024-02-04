@@ -2,25 +2,18 @@ package dev.faceless.gnstaff.utilities.moderation;
 
 import dev.faceless.gnstaff.configuration.Config;
 import dev.faceless.gnstaff.utilities.ConfigUtil;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.*;
 
 public class MuteManager {
     private final Map<UUID, Instant> muteMap = new HashMap<>();
     private final FileConfiguration config = ConfigUtil.MUTES.getConfig();
     private final Config configuration = ConfigUtil.MUTES;
-
     private static MuteManager manager;
 
     private MuteManager() {

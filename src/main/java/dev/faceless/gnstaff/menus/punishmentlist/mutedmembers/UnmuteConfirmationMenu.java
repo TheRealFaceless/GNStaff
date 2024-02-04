@@ -19,7 +19,6 @@ public class UnmuteConfirmationMenu extends Menu {
 
         setItem(3, ItemCreator.create(Material.RED_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&cCancel")),
                 ((staff, event) -> lastMenu.open(staff)));
-
         setItem(5, ItemCreator.create(Material.GREEN_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&aConfirm")), ((staff, event) -> {
             MuteManager.getManager().unmutePlayer((Player) player);
             staff.closeInventory();
@@ -27,7 +26,5 @@ public class UnmuteConfirmationMenu extends Menu {
         }));
 
         MenuUtils.fill(getInventory(), Material.GRAY_STAINED_GLASS_PANE);
-
     }
-
 }
