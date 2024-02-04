@@ -15,7 +15,6 @@ public class UnmuteConfirmationMenu extends Menu {
     public UnmuteConfirmationMenu(OfflinePlayer player, Menu lastMenu) {
         super(9, Component.text("Confirmation Menu"));
         setOpenAction((SoundUtil::MENU_OPEN));
-        setCloseAction(SoundUtil::MENU_CLOSE);
 
         setItem(3, ItemCreator.create(Material.RED_STAINED_GLASS_PANE, ChatUtils.formatLegacy("&cCancel")),
                 ((staff, event) -> lastMenu.open(staff)));

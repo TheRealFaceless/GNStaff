@@ -21,7 +21,6 @@ public class PunishmentListMenu extends Menu {
     public PunishmentListMenu() {
         super(27, Component.text("Punished Members Lists"));
         setOpenAction((SoundUtil::MENU_OPEN));
-        setCloseAction(SoundUtil::MENU_CLOSE);
 
         setItem(12, ItemCreator.create(Material.WRITABLE_BOOK, ChatUtils.formatLegacy("&cBanned Players")), ((staff, event) -> {
             List<OfflinePlayer> bannedPlayers = Bukkit.getBannedPlayers().stream().toList();

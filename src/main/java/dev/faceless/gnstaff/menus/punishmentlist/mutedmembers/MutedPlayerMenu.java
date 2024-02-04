@@ -18,7 +18,6 @@ public class MutedPlayerMenu extends Menu {
     public MutedPlayerMenu(OfflinePlayer player) {
         super(27, Component.text("Manage " + player.getName()));
         setOpenAction((SoundUtil::MENU_OPEN));
-        setCloseAction(SoundUtil::MENU_CLOSE);
 
         setItem(13, ItemCreator.create(Material.GREEN_CONCRETE, ChatUtils.formatLegacy("&aUnmute")), ((staff, event) -> {
             UnmuteConfirmationMenu unmuteConfirmationMenu = new UnmuteConfirmationMenu(player, this);

@@ -17,7 +17,6 @@ public class DurationMenu extends Menu {
     public DurationMenu(Player player, ModerationAction action, Reason reason, Menu lastMenu) {
         super(27, Component.text("Duration"));
         setOpenAction((SoundUtil::MENU_OPEN));
-        setCloseAction(SoundUtil::MENU_CLOSE);
 
         setItem(9, ItemCreator.create(Material.CLOCK, ChatUtils.formatLegacy("&f30 MINUTES")), (staff, event)-> {
             Duration duration = Duration.ofMinutes(30);

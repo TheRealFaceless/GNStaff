@@ -19,7 +19,6 @@ public class BannedPlayerMenu extends Menu {
     public BannedPlayerMenu(OfflinePlayer player) {
         super(27, Component.text("Manage " + player.getName()));
         setOpenAction((SoundUtil::MENU_OPEN));
-        setCloseAction(SoundUtil::MENU_CLOSE);
 
         setItem(13, ItemCreator.create(Material.GREEN_CONCRETE, ChatUtils.formatLegacy("&aPardon")), ((staff, event) -> {
             PardonConfirmationMenu pardonConfirmationMenu = new PardonConfirmationMenu(player, this);
