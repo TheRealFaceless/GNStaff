@@ -10,8 +10,8 @@ Glitched Network Staff GUI is an interactive server moderation GUI designed for 
 
 ## Installation
 
-1. Code is Open Source, Clone Repository and compile project at will.
-2. Place the compiled JAR file in the `plugins` folder of your Spigot/Paper/Purpur server.
+1. Download JAR file from releases.
+2. Place the downloaded JAR file in the `plugins` folder of your Bukkit/Spigot/Paper/Purpur server.
 3. Restart the server to apply the changes.
 
 NOTE: Glitched Network Player Manager soft depends on Essentials X to work! Some features will not be fully functional without Essentials installed.
