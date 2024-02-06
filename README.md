@@ -4,6 +4,9 @@
 - JustAPotato07: [GitHub](https://github.com/JustAPotato06)
 - Faceless: [GitHub](https://github.com/TheRealFaceless)
 
+## Credits(Parts of Code)
+- JustReddy7397: [GitHub](https://github.com/JustReddy7397)
+
 ## Overview
 
 Glitched Network Staff GUI is an interactive server moderation GUI designed for Glitched Network. This plugin provides an intuitive graphical user interface for server staff to efficiently manage and moderate the server.
